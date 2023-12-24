@@ -1,4 +1,8 @@
-<p class="chat">chat #<%= @chat.id %>:</p>
+<button id="toggle-sound">Enable Sound Notifications</button>
+
+<div id="notifications-container" class="notification"></div>
+
+<p class="chat">chat #<%= @chat.title.presence || @chat.id %>:</p>
 
 <div id="messages" class="messages" data-chat-id=<%= @chat.id %>>
   <%= render @chat.messages %>
@@ -6,4 +10,4 @@
 
 <%= render 'messages/form' %>
 
-<p><%= link_to ":leave", root_path, class: "link" %></p>
+<p><%= link_to ":leave chat", root_path, class: "link" %></p>
