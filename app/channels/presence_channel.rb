@@ -5,7 +5,7 @@ class PresenceChannel < ApplicationCable::Channel
   end
 
   def subscribed
-    stream_from "PresenceChannel"
-    stream_for current_user
+    stream_from('PresenceChannel')
+    stream_for(current_user)
   end
 end

@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :user do
-    nickname { "Anonymous" }
+    nickname { 'Anonymous' }
   end
 end

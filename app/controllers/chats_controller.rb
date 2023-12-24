@@ -7,17 +7,16 @@ class ChatsController < ApplicationController
     @users = User.where(is_online: true)
   end
 
-  def show
-  end
+  def show; end
 
   def create
     @chat = Chat.new(chat_params)
     if @chat.save
-      redirect_to @chat, notice: 'Chat was successfully created.'
+      redirect_to(@chat, notice: 'Chat was successfully created.')
     else
       @chats = Chat.all
       @users = User.where(is_online: true)
-      render :index
+      render(:index)
     end
   end
 
@@ -31,4 +30,3 @@ class ChatsController < ApplicationController
     params.require(:chat).permit(:title)
   end
 end
-

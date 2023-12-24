@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version 3.2.2
+* Rails version 7.0.8
 
-Things you may want to cover:
+## Running the Application
 
-* Ruby version
+To run the application, follow these steps:
 
-* System dependencies
+1. Build the Docker image and start the containers:
+   * docker-compose build
+   * docker-compose up
 
-* Configuration
+2. After a successful launch, the application will be available at:
+   * http://0.0.0.0:3000
 
-* Database creation
 
-* Database initialization
+## Endpoints
 
-* How to run the test suite
+### List of Chats
 
-* Services (job queues, cache servers, search engines, etc.)
+- **URL**: `/api/chats`
+- **Method**: `GET`
+- **Description**: Get a list of all chats.
 
-* Deployment instructions
 
-* ...
+  GET http://0.0.0.0:3000/chats
+
+### Create a Message in a Chat
+
+- **URL**: `/api/chats/*your-chat-token*/create_message`
+- **Method**: `POST`
+- **Description**: Create a new message in a chat.
+
+
+  POST http://0.0.0.0:3000/api/chats/*your-chat-token*/create_message
+  
+    {  "message": {  "content": "Hello, world!"  }  }
