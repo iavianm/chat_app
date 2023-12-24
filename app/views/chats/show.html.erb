@@ -1,0 +1,9 @@
+<p class="chat">chat #<%= @chat.id %>:</p>
+
+<div id="messages" class="messages" data-chat-id=<%= @chat.id %>>
+  <%= render @chat.messages %>
+</div>
+
+<%= render 'messages/form' %>
+
+<p><%= link_to ":leave", root_path, class: "link" %></p>

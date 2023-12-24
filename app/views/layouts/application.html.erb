@@ -11,6 +11,9 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="container">
+      <span>Welcome to ChatApp, <b><%= current_user.nickname %></b>!</span>
+        <%= yield %>
+    </div>
   </body>
 </html>

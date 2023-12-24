@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>users online:</p>
+<div id="users">
+  <%= render @users %>
+</div>
+
+<p>chats:</p>
+<ul>
+  <%= render @chats %>
+</ul>
+
+<div>
+  <%= render 'chats/form', chat: @chat %>
+</div>
