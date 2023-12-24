@@ -1,5 +1,13 @@
 <%= form_for @chat do |form| %>
-  <div class="actions">
-    <%= form.submit ':create chat', class: "btn" %>
+  <div class="form-container">
+    <div class="field">
+      <%= form.label :new_chat_title %>
+      <%= form.text_field :title %>
+    </div>
+    <div class="actions">
+      <%= form.submit ':create chat', class: "btn" %>
+    </div>
   </div>
 <% end %>
+
+<span>(You can leave title empty)</span>

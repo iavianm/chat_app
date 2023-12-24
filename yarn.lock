@@ -11,3 +11,8 @@ channels@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/channels/-/channels-0.0.4.tgz#1bee323edea152bb9ef04f41bc6e6b0f5948a941"
   integrity sha512-4zRxUJ/sN+GmA0NeB1wIBA8xzU6C30FsGkSIWob7OLIQVwMKE/ct9n3RLfq8XiLUpafK5gWg7+HuUVzXMXYqVw==
+
+prettier@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.1.1.tgz#6ba9f23165d690b6cbdaa88cb0807278f7019848"
+  integrity sha512-22UbSzg8luF4UuZtzgiUOfcGM8s4tjBv6dJRT7j275NXsy2jb4aJa4NNveul5x4eqlF1wuhuR2RElK71RvmVaw==

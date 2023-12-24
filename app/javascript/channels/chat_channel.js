@@ -1,52 +1,124 @@
-import consumer from "./consumer"
+import consumer from "./consumer";
+let notificationSound = new Audio("/assets/notification.mp3");
 
-document.addEventListener("turbo:load", findMessagesObject);
+let isSoundEnabled = false;
+let currentNotification = null;
 
-function findMessagesObject() {
-    const messages = document.querySelectorAll("#messages");
-    if (messages.length > 0) {
-        createChatChannel(messages[0].dataset["chatId"], messages[0]);
-    }
+function toggleSound() {
+  isSoundEnabled = !isSoundEnabled;
+  const button = document.getElementById("toggle-sound");
+  if (button) {
+    button.textContent = isSoundEnabled
+      ? "Disable Sound Notifications"
+      : "Enable Sound Notifications";
+  }
 }
 
-function createChatChannel(chatId, messages_holder) {
-    const channelChat = consumer.subscriptions.create({channel: "ChatChannel", chat: chatId}, {
-        connected() {
-            // Called when the subscription is ready for use on the server
-        },
+document.addEventListener("turbo:load", () => {
+  const toggleButton = document.getElementById("toggle-sound");
+  if (toggleButton) {
+    toggleButton.addEventListener("click", toggleSound);
+  }
 
-        disconnected() {
-            // Called when the subscription has been terminated by the server
-        },
+  findMessagesObject();
+});
 
-        received(data) {
-            messages_holder.insertAdjacentHTML("beforeend", data["message"]);
-            messages_holder.scrollTop = messages_holder.scrollHeight;
-        }
-    });
+function findMessagesObject() {
+  const messages = document.querySelectorAll("#messages");
+  const chatName = document.querySelector(".chat");
 
-    messages_holder.scrollTop = messages_holder.scrollHeight;
+  if (messages.length > 0) {
+    createChatChannel(
+      messages[0].dataset["chatId"],
+      messages[0],
+      chatName.textContent,
+    );
+  }
+}
 
-    const textarea = document.querySelector("#message_body");
+function createChatChannel(chatId, messages_holder, chatNameText) {
+  const channelChat = consumer.subscriptions.create(
+    { channel: "ChatChannel", chat: chatId },
+    {
+      connected() {
+        // Called when the subscription is ready for use on the server
+      },
 
-    textarea.addEventListener("keypress", (event) => {
-        if (event.keyCode != 13) return false;
+      disconnected() {
+        // Called when the subscription has been terminated by the server
+      },
 
-        event.preventDefault();
-        let message = event.target.value.replace("\n","").trim();
+      received(data) {
+        messages_holder.insertAdjacentHTML("beforeend", data["message"]);
+        messages_holder.scrollTop = messages_holder.scrollHeight;
 
-        if (message == "") return false;
+        playSound();
 
-        channelChat.send({message: message});
-        event.target.value = "";
-        OnInput(event);
-    });
+        displayNotification(chatNameText, data.message);
+      },
+    },
+  );
 
-    textarea.setAttribute("style", "height:" + (textarea.scrollHeight) + "px;overflow-y:hidden;");
-    textarea.addEventListener("input", OnInput, false);
+  messages_holder.scrollTop = messages_holder.scrollHeight;
+
+  const textarea = document.querySelector("#message_body");
+
+  textarea.addEventListener("keypress", (event) => {
+    if (event.keyCode != 13) return false;
+
+    event.preventDefault();
+    let message = event.target.value.replace("\n", "").trim();
+
+    if (message == "") return false;
+
+    channelChat.send({ message: message });
+    event.target.value = "";
+    OnInput(event);
+  });
+
+  textarea.setAttribute(
+    "style",
+    "height:" + textarea.scrollHeight + "px;overflow-y:hidden;",
+  );
+  textarea.addEventListener("input", OnInput, false);
 }
 
 function OnInput(event) {
-    event.target.style.height = 0;
-    event.target.style.height = (event.target.scrollHeight) + "px";
+  event.target.style.height = 0;
+  event.target.style.height = event.target.scrollHeight + "px";
+}
+
+function playSound() {
+  if (!isSoundEnabled) {
+    return;
+  }
+
+  notificationSound
+    .play()
+    .catch((error) => console.error("Error playing sound:", error));
+}
+
+function displayNotification(chatName, messageText) {
+  const notificationsContainer = document.getElementById(
+    "notifications-container",
+  );
+
+  if (currentNotification) {
+    currentNotification.remove();
+  }
+
+  const notification = document.createElement("div");
+  notification.className = "chat-notification";
+  notification.innerHTML = `<strong>${chatName}${messageText}</strong>`;
+
+  notificationsContainer.appendChild(notification);
+
+  currentNotification = notification;
+
+  setTimeout(() => {
+    if (currentNotification === notification) {
+      currentNotification.remove();
+      currentNotification = null;
+    }
+  }, 5000);
 }

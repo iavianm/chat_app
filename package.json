@@ -13,6 +13,7 @@
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^7.1.2",
-    "channels": "^0.0.4"
+    "channels": "^0.0.4",
+    "prettier": "^3.1.1"
   }
 }

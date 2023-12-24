@@ -1,1 +1,1 @@
-<li><%= link_to chat_html(chat.id), chat %></li>
+<li><%= link_to chat_html(chat.title.presence || chat.id), chat %></li>
