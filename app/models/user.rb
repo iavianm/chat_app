@@ -6,7 +6,7 @@ class User < ApplicationRecord
   private
 
   def generate_nickname
-    unless self.nickname.present?
+    unless nickname.present?
       self.nickname = "#{Faker::Name.first_name.downcase}_#{Faker::Name.last_name.downcase}"
     end
   end

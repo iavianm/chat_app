@@ -7,6 +7,6 @@ class OnlineService
   def perform
     @user.update(is_online: @is_online)
 
-    ActionCable.server.broadcast("OnlineChannel", { user: @user })
+    ActionCable.server.broadcast('OnlineChannel', { user: @user })
   end
 end

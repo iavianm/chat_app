@@ -1,6 +1,6 @@
 FROM ruby:3.2.2
 
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client netcat-openbsd
 
 WORKDIR /myapp
 
@@ -13,6 +13,8 @@ COPY . /myapp
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
+COPY wait-for /usr/bin/wait-for
+RUN chmod +x /usr/bin/wait-for
 ENTRYPOINT ["entrypoint.sh"]
 
 EXPOSE 3000

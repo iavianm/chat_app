@@ -4,22 +4,22 @@ module Api
 
     def index
       @chats = Chat.all
-      render json: @chats
+      render(json: @chats)
     end
 
     def create_message
       @chat = Chat.find_by(token: params[:token])
       if @chat.nil?
-        return render json: { error: "Chat not found" }, status: :not_found
+        return render(json: { error: 'Chat not found' }, status: :not_found)
       end
 
       service = MessageService.new(body: message_params[:content], chat: @chat)
       @message = service.perform
 
       if @message.persisted?
-        render json: @message, status: :created
+        render(json: @message, status: :created)
       else
-        render json: @message.errors, status: :unprocessable_entity
+        render(json: @message.errors, status: :unprocessable_entity)
       end
     end
 
@@ -30,4 +30,3 @@ module Api
     end
   end
 end
-

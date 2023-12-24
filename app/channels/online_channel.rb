@@ -2,7 +2,7 @@ class OnlineChannel < ApplicationCable::Channel
   after_unsubscribe :handle_offline
 
   def subscribed
-    stream_from "OnlineChannel"
+    stream_from('OnlineChannel')
 
     OnlineService.new(user: current_user, is_online: true).perform
   end
