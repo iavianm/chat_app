@@ -24,7 +24,7 @@ To run the application, follow these steps:
 - **Description**: Get a list of all chats.
 
 
-  GET http://0.0.0.0:3000/chats
+  GET http://0.0.0.0:3000/api/chats
 
 ### Create a Message in a Chat
 
